@@ -23,16 +23,16 @@
 package callers
 
 import (
-	"fmt"
-	"runtime"
-	"path/filepath"
-	"strings"
 	"bytes"
+	"fmt"
+	"path/filepath"
+	"runtime"
+	"strings"
 )
 
 type Frame struct {
-	File string
-	Line int
+	File     string
+	Line     int
 	Function string
 }
 
@@ -64,7 +64,7 @@ func Callers(skip, depth int) (trace []*Frame) {
 	var f, ok = fs.Next()
 	for ok {
 		var frame = &Frame{
-			Line: f.Line,
+			Line:     f.Line,
 			Function: f.Function,
 		}
 		var file = filepath.ToSlash(f.File)
