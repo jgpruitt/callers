@@ -20,6 +20,7 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
 
+// Package callers provides a simple and easy way to get a stack trace
 package callers
 
 import (
@@ -30,16 +31,23 @@ import (
 	"strings"
 )
 
+// Frame contains file/function/line information for a stack frame
 type Frame struct {
-	File     string
-	Line     int
+	// the source file where the call was made
+	File string
+	// the line in the source file where the call was made
+	Line int
+	// the function where the call was made
 	Function string
 }
 
+// String returns a simple string representation of the Frame
 func (f *Frame) String() string {
 	return fmt.Sprintf("File: %s Line: %d Function: %s", f.File, f.Line, f.Function)
 }
 
+// String prints a slice of *Frames to a string one per line.
+// "indent" is printed at the beginning of each line
 func String(trace []*Frame, indent string) string {
 	var buf = &bytes.Buffer{}
 	for _, frame := range trace {
@@ -49,6 +57,10 @@ func String(trace []*Frame, indent string) string {
 	return buf.String()
 }
 
+// Callers is a handy wrapper around runtime.Callers and
+// runtime.CallersFrames. The argument "skip" is the number
+// of stack frames to skip before collecting frames. The
+// "depth" argument is the number of stack frames to collect.
 func Callers(skip, depth int) (trace []*Frame) {
 	if skip < 0 {
 		skip = 0

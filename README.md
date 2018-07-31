@@ -1,3 +1,3 @@
 # callers
 
-A simple way to get a stack trace.
+A simple way to get a stack trace
